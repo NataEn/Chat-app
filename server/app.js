@@ -1,6 +1,5 @@
 const createError = require("http-errors");
 const express = require("express");
-const socketio = require("socket.io");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
