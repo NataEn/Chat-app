@@ -7,6 +7,7 @@
 const app = require("../app");
 const debug = require("debug")("server:server");
 const http = require("http");
+const appio = require("../socketio");
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +21,8 @@ app.set("port", port);
  */
 
 const server = http.createServer(app);
+
+appio(server);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -84,7 +87,3 @@ function onListening() {
   const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
 }
-
-module.exports = {
-  server,
-};
