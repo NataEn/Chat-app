@@ -6,9 +6,10 @@ const {
   getUsersInRoom,
 } = require("../models/users");
 
-const errHandler = ({ err }) => {
+const errHandler = ({ err, socket }) => {
   if (err) {
     console.error(`socket error: ${err}`);
+    socket.emit("error", { err });
   }
 };
 
@@ -28,12 +29,31 @@ const appio = (server) => {
       if (error) {
         return clientErrHandler(error);
       }
+      socket.emit("message", {
+        user: "admin",
+        text: `${user.name}. Welcome to the room ${user.room}`,
+      });
+
+      socket.broadcast
+        .to(user.room)
+        .emit("message", { user: "admin", text: `${user.name}, has joined!` });
+
       socket.join(user.room);
+
+      clientErrHandler();
     });
-    socket.on("disconnect", () => {
+
+    socket.on("sendMessage", (message, callback) => {
+      const user = getUser(socket.id);
+      io.to(user.room).emit("message", { user: user.name, text: message });
+
+      callback();
+    });
+
+    socket.on("break_connection", () => {
       console.log("user has left");
     });
-    socket.on("error", (err) => errHandler(err));
+    socket.on("error", (err) => errHandler(err, socket));
   });
 };
 
