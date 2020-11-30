@@ -1,4 +1,10 @@
 const socketio = require("socket.io");
+const {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersInRoom,
+} = require("../models/users");
 
 const errHandler = ({ err }) => {
   if (err) {
@@ -7,6 +13,7 @@ const errHandler = ({ err }) => {
 };
 
 const appio = (server) => {
+  // const io = socketio(server);
   const io = socketio(server, {
     cors: {
       origin: "*",
@@ -15,8 +22,13 @@ const appio = (server) => {
   });
   io.on("connection", (socket) => {
     console.log("A new connection established");
-    socket.on("join", ({ name, room }) => {
+    socket.on("join", ({ name, room }, clientErrHandler) => {
       console.log(`${name} joined a chat room: ${room}`);
+      const { error, user } = addUser({ id: socket.id, name, room });
+      if (error) {
+        return clientErrHandler(error);
+      }
+      socket.join(user.room);
     });
     socket.on("disconnect", () => {
       console.log("user has left");
