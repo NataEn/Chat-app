@@ -16,7 +16,17 @@ const Chat=()=>{
     socket=io(ENDPOINT)
     setName(name);
     setRoom(room)
-    socket.emit('join',{name,room})
+    socket.emit('join',{name,room},((err)=>{ 
+        if(err){
+            console.error(err);
+            socket.emit('error',{err:'err'})
+        }
+        }))
+    
+    return ()=>{
+        socket.emit('break_connection');
+        socket.off();
+    }
    },[ENDPOINT,location.search])
     
     return <h1>Chat</h1>
