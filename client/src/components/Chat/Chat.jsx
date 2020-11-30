@@ -42,7 +42,8 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on("message", (message) => {
-      console.log(`got new message ${message.text}, total messages: ${messages}`);
+      console.log(`got new message ${message.text}, total messages: ${messages.length}`);
+      console.log(messages)
       setMessages([...messages, message]);
     });
   }, [messages]);
