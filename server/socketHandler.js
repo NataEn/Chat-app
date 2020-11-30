@@ -9,8 +9,8 @@ const appio = (server) => {
   });
   io.on("connection", (socket) => {
     console.log("A new connection established");
-    socket.on("join", () => {
-      console.log("someone joined a chat room");
+    socket.on("join", ({ name, room }) => {
+      console.log(`${name} joined a chat room: ${room}`);
     });
     socket.on("disconnect", () => {
       console.log("user has left");
