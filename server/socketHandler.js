@@ -9,8 +9,11 @@ const appio = (server) => {
   });
   io.on("connection", (socket) => {
     console.log("A new connection established");
-    socket.on("join", ({ name, room }) => {
+    socket.on("join", ({ name, room }, errHandler) => {
       console.log(`${name} joined a chat room: ${room}`);
+      if (err) {
+        errHandler({ err });
+      }
     });
     socket.on("disconnect", () => {
       console.log("user has left");
