@@ -4,7 +4,7 @@ const {
   removeUser,
   getUser,
   getUsersInRoom,
-} = require("../models/users");
+} = require("./models/users");
 
 const errHandler = ({ err, socket }) => {
   if (err) {
@@ -23,6 +23,7 @@ const appio = (server) => {
   });
   io.on("connection", (socket) => {
     console.log("A new connection established");
+
     socket.on("join", ({ name, room }, clientErrHandler) => {
       console.log(`${name} joined a chat room: ${room}`);
       const { error, user } = addUser({ id: socket.id, name, room });
@@ -45,6 +46,7 @@ const appio = (server) => {
 
     socket.on("sendMessage", (message, callback) => {
       const user = getUser(socket.id);
+      console.log("message sent", message);
       io.to(user.room).emit("message", { user: user.name, text: message });
 
       callback();
@@ -53,7 +55,9 @@ const appio = (server) => {
     socket.on("break_connection", () => {
       console.log("user has left");
     });
-    socket.on("error", (err) => errHandler(err, socket));
+    socket.on("error", (err) => {
+      errHandler(err, socket);
+    });
   });
 };
 
