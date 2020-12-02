@@ -13,8 +13,7 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const ENDPOINT = "localhost:5000";
 
-  const sendMessage = (event) => {
-    // event.preventdefault(); // prevent page refresh
+  const sendMessage = () => {
     if (message) {
         console.log(`emitting message ${message} from id ${socket.id}`)
       socket.emit("sendMessage", message, () => {
@@ -56,6 +55,7 @@ const Chat = () => {
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           onKeyPress={(event) => {
+            //   event.preventDefault();
             if (event.key === "Enter") {
               console.log("keyPress", event.key);
               sendMessage(message);

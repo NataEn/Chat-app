@@ -46,7 +46,7 @@ const appio = (server) => {
 
     socket.on("sendMessage", (message, callback) => {
       const user = getUser(socket.id);
-      console.log("message sent", message);
+      console.log(`${user.name} sent`, message);
       io.to(user.room).emit("message", {
         user: user.name,
         text: message + "from server",
