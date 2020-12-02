@@ -15,10 +15,8 @@ const Chat = () => {
 
   const sendMessage = () => {
     if (message) {
-        console.log(`emitting message ${message} from id ${socket.id}`)
-      socket.emit("sendMessage", message, () => {
-        setMessage("");
-      });
+      console.log(`emitting message ${message} from client id ${socket.id}`);
+      socket.emit("sendMessage", message, () => setMessage(""));
     }
   };
 
@@ -41,11 +39,10 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on("message", (message) => {
-      console.log(`got new message ${message.text}, total messages: ${messages.length}`);
-      console.log(messages)
-      setMessages([...messages, message]);
+        console.log(`got message ${message.user}:${message.text}`)
+      setMessages((messages) => [...messages, message]);
     });
-  }, [messages]);
+  }, [message]);
 
   return (
     <div className="outerContainer">
@@ -55,8 +52,8 @@ const Chat = () => {
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           onKeyPress={(event) => {
-            //   event.preventDefault();
             if (event.key === "Enter") {
+                event.preventDefault();
               console.log("keyPress", event.key);
               sendMessage(message);
             }
