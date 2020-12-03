@@ -57,17 +57,6 @@ const Chat = () => {
           sendMessage={sendMessage}
           setMessage={setMessage}
         />
-        <input
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-          onKeyPress={(event) => {
-            if (event.key === "Enter") {
-              event.preventDefault();
-              console.log("keyPress", event.key);
-              sendMessage(message);
-            }
-          }}
-        ></input>
       </div>
     </div>
   );
