@@ -1,4 +1,16 @@
 import React, { useState, useEffect } from "react";
-const Messages = ({ messages }) => <div>my content</div>;
+import ScroolToBottom from "react-scroll-to-bottom";
+import Message from "../Message/Message";
+
+const Messages = ({ messages, name }) => (
+  <ScroolToBottom>
+    {messages.map((message, index) => (
+      <div key={index}>
+        {message.user}:{message.text}
+        <Message message={message} name={name} />
+      </div>
+    ))}
+  </ScroolToBottom>
+);
 
 export default Messages;
