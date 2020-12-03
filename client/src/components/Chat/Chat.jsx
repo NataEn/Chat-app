@@ -42,8 +42,8 @@ const Chat = () => {
         console.log(`got message ${message.user}:${message.text}`)
       setMessages((messages) => [...messages, message]);
     });
-  }, [message]);
-
+  }, []);
+  console.log(message,messages)
   return (
     <div className="outerContainer">
       <h1>Chat</h1>
