@@ -30,10 +30,10 @@ const Chat = () => {
         console.error(err);
       }
     });
+    console.log(location.search)
 
     return () => {
-      socket.emit("break_connection");
-      socket.off();
+      socket.disconnect();
     };
   }, [ENDPOINT, location.search]);
 

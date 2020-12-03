@@ -54,9 +54,8 @@ const appio = (server) => {
 
       callback();
     });
-
-    socket.on("break_connection", () => {
-      console.log("user has left");
+    socket.on("disconnect", (reason) => {
+      console.log(`user has left ${reason}`);
     });
     socket.on("error", (err) => {
       errHandler(err, socket);
