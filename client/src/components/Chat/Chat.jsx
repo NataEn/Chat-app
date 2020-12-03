@@ -46,6 +46,9 @@ const Chat = () => {
       console.log(`got message ${message.user}:${message.text}`);
       setMessages((messages) => [...messages, message]);
     });
+    socket.on("roomData", ({ room, users }) => {
+      console.log(room, users);
+    });
   }, []);
   console.log(message, messages);
   return (

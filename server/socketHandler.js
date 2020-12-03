@@ -41,6 +41,11 @@ const appio = (server) => {
 
       socket.join(user.room);
 
+      io.to(user.room).emit("roomData", {
+        room: user.room,
+        users: getUsersInRoom(user.room),
+      });
+
       clientErrHandler();
     });
 
@@ -50,6 +55,10 @@ const appio = (server) => {
       io.to(user.room).emit("message", {
         user: user.name,
         text: message + "from server",
+      });
+      io.to(user.room).emit("roomData", {
+        room: user.room,
+        users: getUsersInRoom(user.room),
       });
 
       callback();
