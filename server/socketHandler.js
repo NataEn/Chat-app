@@ -56,6 +56,13 @@ const appio = (server) => {
     });
     socket.on("disconnect", (reason) => {
       console.log(`user has left: ${reason}`);
+      const user = removeUser(socket.id);
+      if (user) {
+        io.to(user.room).emit("message", {
+          user: "admin",
+          text: `${user.name} has left the room`,
+        });
+      }
     });
     socket.on("error", (err) => {
       errHandler(err, socket);
