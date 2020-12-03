@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import io from "socket.io-client";
-import InfoBar from "../InfoBar/InfoBar"
-import "./Chat.css"
+import InfoBar from "../InfoBar/InfoBar";
+import Input from "../Input/Input";
+import "./Chat.css";
 
 let socket;
 
@@ -32,7 +33,7 @@ const Chat = () => {
         console.error(err);
       }
     });
-    console.log(location.search)
+    console.log(location.search);
 
     return () => {
       socket.disconnect();
@@ -41,22 +42,27 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on("message", (message) => {
-        console.log(`got message ${message.user}:${message.text}`)
+      console.log(`got message ${message.user}:${message.text}`);
       setMessages((messages) => [...messages, message]);
     });
   }, []);
-  console.log(message,messages)
+  console.log(message, messages);
   return (
     <div className="outerContainer">
       <h1>Chat</h1>
-      <InfoBar room={room}/>
+      <InfoBar room={room} />
       <div className="innerContainer">
+        <Input
+          message={message}
+          sendMessage={sendMessage}
+          setMessage={setMessage}
+        />
         <input
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           onKeyPress={(event) => {
             if (event.key === "Enter") {
-                event.preventDefault();
+              event.preventDefault();
               console.log("keyPress", event.key);
               sendMessage(message);
             }
