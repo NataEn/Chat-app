@@ -6,7 +6,6 @@ const Messages = ({ messages, name }) => (
   <ScroolToBottom>
     {messages.map((message, index) => (
       <div key={index}>
-        {message.user}:{message.text}
         <Message message={message} name={name} />
       </div>
     ))}

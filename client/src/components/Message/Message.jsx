@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
-const Message = ({ message, name }) => {
+import "./Message.css";
+const Message = ({ message: { user, text }, name }) => {
   let isSentFromCurrentUser = false;
   const trimmedName = name.trim().toLowerCase();
-  if (message.user === trimmedName) {
+  if (user === trimmedName) {
     isSentFromCurrentUser = true;
   }
   return isSentFromCurrentUser ? (
-    <div>same user {name}</div>
+    <div className="messageContainer">
+      <p className="sentText">{trimmedName}:</p>
+      <div className="messageBox">
+        <p className="messageText">{text}</p>
+      </div>
+    </div>
   ) : (
-    <div>
-      not same user name={name} user={message.user}
+    <div className="messageContainer blue">
+      <p className="sentText">{user}:</p>
+      <div className="messageBox">
+        <p className="messageText">{text}</p>
+      </div>
     </div>
   );
 };
