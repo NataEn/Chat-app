@@ -6,8 +6,21 @@
 
 const app = require("../app");
 const debug = require("debug")("server:server");
+const dotenv = require("dotenv").config();
 const http = require("http");
-const appio = require("../socketHandler");
+const appio = require("../webSockets/socketHandler");
+
+const dbConfig = require("../config/mongodb");
+const mongoose = require("mongoose");
+
+mongoose.connect(dbConfig.url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const mongoConnection = mongoose.connection;
+mongoConnection.on("open", () => {
+  console.log("mongodDb connected...");
+});
 
 /**
  * Get port from environment and store in Express.
