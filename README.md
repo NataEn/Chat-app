@@ -12,7 +12,9 @@ Chat application
 2. Clone this repository
 3. cd into client and run `npm install`
 4. cd into server and run `npm install`
-5. start the client and server with `npm start`
+5. in the server main file create a .env file and declare the corresponding environment variables:
+   SERVER_PORT, MONGODB_URL,
+6. start the client and server with `npm start`
 
 ## :fire: Technologies:
 
