@@ -3,4 +3,4 @@ const {
   removeUser,
   getUser,
   getUsersInRoom,
-} = require("../models/users");
+} = require("../webSockets/users");

@@ -25,8 +25,22 @@ router.get("/:id", async (req, res, next) => {
 });
 
 /* create one user*/
-router.post("/", function (req, res, next) {
-  res.send("creating a new user");
+router.post("/subscribe", async (req, res, next) => {
+  console.log("in subscription page");
+  console.log(req.body);
+
+  const user = new User({
+    name: req.body.name,
+    image: req.body.image,
+    hobbies: req.body.hobbies,
+  });
+
+  try {
+    const newUser = await user.save();
+    res.status(201).json({ user: newUser });
+  } catch (err) {
+    errHandler(err, req, res);
+  }
 });
 
 /* updating one user according to what is sent*/
