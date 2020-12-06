@@ -12,9 +12,12 @@ Chat application
 2. Clone this repository
 3. cd into client and run `npm install`
 4. cd into server and run `npm install`
-5. in the server main file create a .env file and declare the corresponding environment variables:
+5. make sure you have nodemon installed globally, or just run
+   `npm i -g nodemon --save-dev`
+6. in server's main file create a local environment variables  
+   file with the ".env" file-extension and declare the corresponding environment variables:
    SERVER_PORT, MONGODB_URL,
-6. start the client and server with `npm start`
+7. start the client and server with `npm start`
 
 ## :fire: Technologies:
 

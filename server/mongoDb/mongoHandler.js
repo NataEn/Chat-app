@@ -1,4 +1,3 @@
-const dotenv = require("dotenv").config();
 const dbConfig = require("../config/mongodb");
 const mongoose = require("mongoose");
 
@@ -10,4 +9,4 @@ const mongoConnection = mongoose.connection;
 mongoConnection.on("open", () => {
   console.log("mongodDb connected...");
 });
-mongoConnection.on("error", (err) => console.error(err));
+mongoConnection.on("error", (err) => console.error(`mongoDb: ${err}`));

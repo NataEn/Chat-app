@@ -1,8 +1,10 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const User = require("../models/users");
 
-/* GET users listing. */
-router.get("/", function (req, res, next) {
+/* GET all users. */
+router.get("/", async (req, res, next) => {
+  const users = await User.find();
   res.send("respond with a resource");
 });
 
