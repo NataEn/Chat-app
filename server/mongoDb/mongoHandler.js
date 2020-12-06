@@ -7,6 +7,6 @@ mongoose.connect(dbConfig.url, {
 });
 const mongoConnection = mongoose.connection;
 mongoConnection.on("open", () => {
-  console.log("mongodDb connected...");
+  console.log("mongoDb connected...");
 });
 mongoConnection.on("error", (err) => console.error(`mongoDb: ${err}`));
