@@ -1,16 +1,26 @@
 const express = require("express");
 const router = express.Router();
+const { errHandler } = require("./util");
 const User = require("../models/users");
 
 /* GET all users. */
 router.get("/", async (req, res, next) => {
-  const users = await User.find();
-  res.send("respond with a resource");
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    errHandler(err, req, res);
+  }
 });
 
 /* get one specific user*/
-router.get("/:id", function (req, res, next) {
-  const id = req.params.id;
+router.get("/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+  } catch (err) {
+    errHandler(err, req, res);
+  }
+
   res.send(`got user of id :${id}`);
 });
 
