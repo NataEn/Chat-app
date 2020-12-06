@@ -2,6 +2,7 @@ const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 const logger = require("morgan");
 const cors = require("cors");
 // const corsOptions = {
@@ -20,6 +21,9 @@ app.set("view engine", "jade");
 
 app.use(cors());
 app.options("*", cors());
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.use(logger("short"));
 app.use(express.json());
