@@ -9,6 +9,7 @@
       "request": "launch",
       "name": "Launch Server",
       "program": "${workspaceFolder}\\server\\bin\\www",
+      "cwd": "${workspaceFolder}\\server",
       "skipFiles": [
         "<node_internals>/**",
         "${workspaceFolder}/server/node_modules/**/*.js"
