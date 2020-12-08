@@ -4,9 +4,11 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    minlength: 3,
+    maxlength: 10,
   },
   image: {
-    type: String,
+    type: Buffer,
     required: false,
   },
   hobbies: {
