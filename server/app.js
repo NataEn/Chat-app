@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const cors = require("cors");
+const multer = require("multer");
+
 // const corsOptions = {
 //   origin: "*",
 //   optionsSuccessStatus: 200,
