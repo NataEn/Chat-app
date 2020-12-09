@@ -1,6 +1,18 @@
 const express = require("express");
+const path = require("path");
 const router = express.Router();
-const { errHandler } = require("./util");
+const multer = require("multer");
+const { errHandler, writeFile, readFile } = require("./util");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 const User = require("../models/users");
 
 //creating  a get-user middleware
@@ -34,6 +46,8 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", getUser, async (req, res, next) => {
   try {
     console.log("try to get one");
+    console.log(res.user.image);
+    writeFile(`${res.user.name}.png`, res.user.image);
     res.json(res.user);
   } catch (err) {
     errHandler(err, req, res);
@@ -41,12 +55,16 @@ router.get("/:id", getUser, async (req, res, next) => {
 });
 
 /* create one user*/
-router.post("/subscribe", async (req, res, next) => {
+router.post("/subscribe", upload.single("image"), async (req, res, next) => {
   console.log(req.body);
+  console.log(process.cwd());
+  const fileBuffer = await readFile(
+    path.join(process.cwd(), "/uploads", req.file.filename)
+  );
 
   const user = new User({
     name: req.body.name,
-    image: req.body.image,
+    image: fileBuffer,
     hobbies: req.body.hobbies,
   });
 
