@@ -1,4 +1,5 @@
 const socketio = require("socket.io");
+const fs = require("fs");
 const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
 
 const errHandler = ({ err, socket }) => {
@@ -9,7 +10,6 @@ const errHandler = ({ err, socket }) => {
 };
 
 const appio = (server) => {
-  // const io = socketio(server);
   const io = socketio(server, {
     cors: {
       origin: "*",
@@ -58,6 +58,23 @@ const appio = (server) => {
 
       callback();
     });
+    socket.on("sendFile", (file, callback) => {
+      const user = getUser(socket.id);
+      console.log(`${user.name} sent`, file);
+      // const imgFile = fs.readFileSync(file);
+      // const imgBase64 = imgFile.toString("base64");
+      io.to(user.room).emit("file", {
+        user: user.name,
+        base64Img: file,
+      });
+      io.to(user.room).emit("roomData", {
+        room: user.room,
+        users: getUsersInRoom(user.room),
+      });
+      callback();
+    });
+    // socket.broadcast.emit("img", imgBase64); //--?
+
     socket.on("disconnect", (reason) => {
       console.log(`user has left: ${reason}`);
       const user = removeUser(socket.id);
