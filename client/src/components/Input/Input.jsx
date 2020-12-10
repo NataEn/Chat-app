@@ -1,9 +1,10 @@
 import "fs";
-import React from "react";
+import React, { useState } from "react";
 import { uploadFile } from "../../util";
+
 import "./Input.css";
 
-const Input = ({ message, sendMessage, setMessage, type, props }) => {
+const Input = ({ message, sendMessage, setMessage, type, ...props }) => {
   return (
     <form className="form" encType="multipart/form-data">
       <input
@@ -12,18 +13,16 @@ const Input = ({ message, sendMessage, setMessage, type, props }) => {
         type={type}
         key={type}
         placeholder="type a message..."
-        value={message}
+        value={type === "text" ? message : ""}
         onChange={(event) => {
-          console.log(event.target.value);
           if (type === "file") {
-            setMessage(uploadFile(event));
+            uploadFile({ event, setMessage });
           } else {
             setMessage(event.target.value);
           }
         }}
         onKeyPress={(event) => {
           if (event.key === "Enter") {
-            console.log(type, event.key);
             event.preventDefault();
             sendMessage(message);
           }

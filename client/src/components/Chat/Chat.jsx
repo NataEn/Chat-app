@@ -18,20 +18,21 @@ const Chat = () => {
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [inputType, setInputType] = useState(null);
   const [file, setFile] = useState(null);
   const ENDPOINT = "localhost:5000";
 
   const sendMessage = () => {
+    console.log("in send message", message);
     if (message) {
       console.log(`emitting message ${message} from client id ${socket.id}`);
       socket.emit("sendMessage", message, () => setMessage(""));
     }
   };
   const sendFile = () => {
-    if (message) {
-      console.log(`emitting file ${message} from client id ${socket.id}`);
-      socket.emit("sendFile", message, () => setFile(""));
+    console.log("in send file", file);
+    if (file) {
+      console.log(`emitting file ${file} from client id ${socket.id}`);
+      socket.emit("sendFile", file, () => setFile(""));
     }
   };
 
@@ -64,10 +65,11 @@ const Chat = () => {
     socket.on("file", (data) => {
       console.log(data);
       setMessages((messages) => [...messages, data]);
+
       const imgTag = `<img src="data:image/png;base64, ${data}"/>`; // inject into DOM
     });
   }, []);
-  console.log(message, messages);
+  console.log(messages, file);
   return (
     <div className="outerContainer">
       <h1>Chat</h1>
@@ -80,20 +82,20 @@ const Chat = () => {
             ? users.map((user, index) => <span key={index}> {user} </span>)
             : null}
         </div>
-        <img id="output"></img>
+        <img id="output" src={file}></img>
         {/* <Button type={"text"} setInputType={setInputType} key={"text"} />
         <Button type={"file"} setInputType={setInputType} key={"file"} /> */}
         <Input
           message={message}
           sendMessage={sendMessage}
           setMessage={setMessage}
-          type={"text"}
+          type="text"
         />
         <Input
           message={file}
           sendMessage={sendFile}
           setMessage={setFile}
-          type={"file"}
+          type="file"
           accept="image/*"
           multiple={true}
         />
