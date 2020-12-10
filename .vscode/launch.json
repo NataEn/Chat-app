@@ -17,7 +17,7 @@
     },
     {
       "name": "Launch Chrome",
-      "program": "${workspaceFolder}/app.js",
+      "program": "${workspaceFolder}/client/src/App.jsx",
       "request": "launch",
       "skipFiles": ["<node_internals>/**","${workspaceFolder}/client/node_modules/**/*.js",],
       "type": "pwa-node",
