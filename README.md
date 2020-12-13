@@ -29,6 +29,4 @@ Chat application
 
 ## :fireworks: Styling: Material UI
 
-## Mockups:
-
-https://www.figma.com/file/o5TE0CZLfrJ86vXjLexihK/Chat-App?node-id=0%3A1
+## View Mockups on <a href="https://www.figma.com/file/o5TE0CZLfrJ86vXjLexihK/Chat-App?node-id=0%3A1" target="_top">Figma</a>
